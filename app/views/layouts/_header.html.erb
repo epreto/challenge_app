@@ -1,0 +1,17 @@
+<nav class = "navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+  <a class="navbar-left" href="<%= root_url =%>">
+    <%= image_tag("icon.ico", :alt => "logo", :class => "logo") %>
+  </a>
+
+  <ul class="nav navbar-nav navbar-right">
+    <% if logged_in? %>
+      <li><%= link_to "Posts", show_path %></li>
+      <li><%= link_to current_user.name, edit_user_path(current_user) %></li>
+      <li><%= link_to "Log out", logout_path, method: :delete %></li>
+    <% else %>
+      <li><%= link_to "Log in", login_path %></li>
+    <% end %>
+   </ul>
+  </div>
+</nav>

@@ -1,0 +1,21 @@
+<% provide(:title, 'New') %>
+<h1>New Post</h1>
+
+<%= form_for(@micropost) do |f| %>
+  <div class="field">
+    <%= f.text_area :title, placeholder: "Title Post", class: "form-control", rows: "1" %>
+    <%= f.text_area :content, placeholder: "Content Post", class: "form-control", rows: "10" %>
+  
+  
+  <div class="input-group" style = "padding-bottom: 14px; ">
+    <span class="input-group-btn">
+      <span class="btn btn-small btn-primary btn-inverse" onclick="$(this).parent().find('input[type=file]').click();">Add Image</span>
+      <%= f.file_field :picture, onchange: "$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\\\|/]/).pop());", style: "display: none;",accept: 'image/jpeg,image/gif,image/png' %>
+    </span>
+    <span class="form-control"></span>
+    </div>
+  </div>
+  
+  
+  <%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,63 @@
+ <% provide(:title, "Posts") %>
+
+ <h1 class = "title">Posts</h1>
+<div class="row" style= "padding-bottom: 30px;">
+    <div class="col-lg-10">
+            <%= form_tag(show_path, :method => "get", class: "input-group") do %>
+              <%= text_field_tag :search, params[:search], placeholder: "Search for...", class: "form-control" %>
+              <span class="input-group-btn">
+                  <%= button_tag raw("<i class=\"fa fa-search\"></i>"), class:"btn btn-primary" %>
+              </span>
+            <% end %>
+        
+    </div><!-- /.col-lg- -->
+        <div class="col-lg-2">
+            <%= link_to "New Post", new_path, class: "btn btn-primary btn-block" %>
+        </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+ 
+ <% @microposts.each do |micropost| %>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class = "row">
+                <div class ="col-lg-11" >
+                    <h3 class="panel-title"><%= micropost.title %></h3>
+                </div>
+                <div class ="col-lg-1" align="right">
+                    <% if current_user?(micropost.user) %>
+                        <div class="dropdown">
+                          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Edit</a></li>
+                            <li><%= link_to "Delete Post", micropost, method: :delete,
+                                       data: { confirm: "You sure?" } %></li>
+                          </ul>
+                        </div>
+                    <% end %>
+                </div> 
+            </div>
+            
+        </div>
+        <div class="panel-body">
+            <% if micropost.picture? %>
+                <div class="row">
+                    <div class = "col-lg-4" align="center">
+                        <img src = "<%= micropost.picture.url %>" style = "width: 300px">
+                    </div>
+                    <div class = "col-lg-8" align="left">
+                        <%= micropost.content %>
+                    </div>
+                </div>
+            <% else %>
+                <%= micropost.content %>
+            <% end %>
+            
+        </div>
+        <div class="panel-footer" align = "right"><%= micropost.user.name %> | Posted <%= time_ago_in_words(micropost.created_at) %></div>
+    </div>
+ <%end%>
+ 
+
+ 
